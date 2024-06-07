@@ -7,14 +7,14 @@ parent: Features
 # Message Ordering
 One of the frequent use cases in distributed systems that uses asynchronous messaging is to avoid processing messages simulataneously that has some causal ordering among them. For instance, assume we have building a messaging system for a calculator.
 
-![Time Sequence - Parallel Processing](/assets/async_race_condition.drawio.svg)
+![Time Sequence - Parallel Processing](./assets/async_race_condition.drawio.svg)
 
 The above scenario describes a race condition scenario. Ideally we would have wanted one operation to be completely over before the next was even processed. Such as setting the value of X to 3 before decrementing it by 1 or setting the value of X as 0 before incrementing it by 2. However, neither of that is what has happened here. This is an unavoidable scenario in most of the distributed systems. 
 
 ## Solution
 One of the solutions, the most obvious one here is not to use a thread pool but rather process messages one at a time as shown below:
 
-![Time Sequence - Sequential Processing](/assets/async_sequential.drawio.svg)
+![Time Sequence - Sequential Processing](./assets/async_sequential.drawio.svg)
 
 So, as shown here based on this approach, since the calculator is not parallel dispatching the messages, it is guaranteed that only one message be processed at any point in time thus totally avoiding the race condition scenario. However, the downside with this approach is, it significanlty brings down the throughput of the system. In many cases where messages are mutually independent, this sequential processing will leave much of the resources of the system be unutilized. To avoid this, we definitely need to bring back parallel processing of the message. 
 
